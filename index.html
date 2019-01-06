@@ -106,7 +106,9 @@
     <div class="main">
         <div class="form">
             <label for="hex">请输入 Hex 值: </label>
-            <input type="text" id="hex">
+            <input type="text" id="hex" value="ff00ff">
+            <label for="step">步进值：</label>
+            <input type="text" id="step" value="5">
             <button onclick="genColor()">生成</button>
         </div>
         <div class="title">改变色调H</div>
@@ -132,9 +134,19 @@
 
         function genColorHtml(type, min, max){
             var hex = document.getElementById('hex').value;
+            var step = document.getElementById('step').value;
+            try {
+                step = parseInt(step);
+            } catch(e){
+                step = 0;
+            }
+            if(step < 1){
+                alert('步进值必须大于 0');
+                return;
+            }
             var hsl = ColorUtil.rgb2hsl(ColorUtil.hex2rgb(hex));
             var hexArray = [];
-            for (let i = min; i < max; i+=5) {
+            for (let i = min; i < max; i+=step) {
                 hsl[type] = i/max;
                 hexArray.push(ColorUtil.rgb2hex(ColorUtil.hsl2rgb(hsl)));
             }
