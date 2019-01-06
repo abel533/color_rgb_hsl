@@ -128,12 +128,12 @@
     <script>
 
         function genColor(){
-            document.querySelector('.H').innerHTML = genColorHtml('H', 0, 360);
-            document.querySelector('.S').innerHTML = genColorHtml('S', 0, 100);
-            document.querySelector('.L').innerHTML= genColorHtml('L', 0, 100);
+            document.querySelector('.H').innerHTML = genColorHtml('H', 360);
+            document.querySelector('.S').innerHTML = genColorHtml('S', 100);
+            document.querySelector('.L').innerHTML= genColorHtml('L', 100);
         }
 
-        function genColorHtml(type, min, max){
+        function genColorHtml(type, max){
             var hex = document.getElementById('hex').value;
             var step = document.getElementById('step').value;
             try {
@@ -146,8 +146,9 @@
                 return;
             }
             var hsl = ColorUtil.rgb2hsl(ColorUtil.hex2rgb(hex));
+            var start = hsl[type]%step;
             var hexArray = [];
-            for (let i = min; i < max; i+=step) {
+            for (let i = start; i < max; i+=step) {
                 hsl[type] = i/max;
                 hexArray.push(ColorUtil.rgb2hex(ColorUtil.hsl2rgb(hsl)));
             }
